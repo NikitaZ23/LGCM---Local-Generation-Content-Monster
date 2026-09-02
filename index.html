@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LGCM - Local Generation Content Monster</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Local Generation Content Monster</p>
+          <h1>LGCM</h1>
+        </div>
+        <div class="top-actions">
+          <button class="tool-button" id="randomizeButton" type="button" title="Собрать случайного монстра">Случайно</button>
+          <button class="tool-button" id="resetButton" type="button" title="Вернуть базовые параметры">Сброс</button>
+          <button class="tool-button accent" id="copyPromptButton" type="button" title="Скопировать готовый промпт">Копировать</button>
+        </div>
+      </header>
+
+      <section class="workbench">
+        <form class="builder-panel" id="builderForm">
+          <div class="section-heading">
+            <h2>Конструктор</h2>
+            <span id="readabilityBadge">Силуэт OK</span>
+          </div>
+
+          <div class="field-grid">
+            <label>
+              <span>Имя</span>
+              <input id="monsterName" type="text" placeholder="например: Blind Cave Ghoul">
+            </label>
+
+            <label>
+              <span>Стиль</span>
+              <select id="visualStyle"></select>
+            </label>
+
+            <label>
+              <span>Среда</span>
+              <select id="biome"></select>
+            </label>
+
+            <label>
+              <span>Роль</span>
+              <select id="role"></select>
+            </label>
+
+            <label>
+              <span>Архитектура тела</span>
+              <select id="bodyPlan"></select>
+            </label>
+
+            <label>
+              <span>Происхождение</span>
+              <select id="origin"></select>
+            </label>
+
+            <label>
+              <span>Телосложение</span>
+              <select id="build"></select>
+            </label>
+
+            <label>
+              <span>Голова</span>
+              <select id="head"></select>
+            </label>
+
+            <label>
+              <span>Конечности</span>
+              <select id="limbs"></select>
+            </label>
+
+            <label>
+              <span>Материал</span>
+              <select id="material"></select>
+            </label>
+
+            <label class="wide-field">
+              <span>Одна сильная особенность</span>
+              <select id="feature"></select>
+            </label>
+
+            <label>
+              <span>Ракурс</span>
+              <select id="view"></select>
+            </label>
+
+            <label>
+              <span>Сложность</span>
+              <select id="complexity"></select>
+            </label>
+
+            <label class="wide-field">
+              <span>Своя особенность</span>
+              <input id="customFeature" type="text" placeholder="заменит выбранную особенность">
+            </label>
+          </div>
+
+          <div class="switch-row">
+            <label class="switch">
+              <input id="allowWeapon" type="checkbox">
+              <span>Разрешить оружие</span>
+            </label>
+            <label class="switch">
+              <input id="strict3d" type="checkbox" checked>
+              <span>Строго для 3D</span>
+            </label>
+          </div>
+
+          <label class="wide-note">
+            <span>Дополнительные ограничения</span>
+            <textarea id="extraNegative" rows="3" placeholder="например: no extra limbs, no armor, no glowing effects"></textarea>
+          </label>
+        </form>
+
+        <section class="output-panel">
+          <div class="section-heading">
+            <h2>Промпт</h2>
+            <div class="small-actions">
+              <button class="ghost-button" id="savePresetButton" type="button">Сохранить</button>
+              <button class="ghost-button" id="exportButton" type="button">Экспорт JSON</button>
+            </div>
+          </div>
+
+          <textarea id="promptOutput" class="prompt-output" spellcheck="false"></textarea>
+
+          <div class="prompt-meta" id="promptMeta"></div>
+
+          <div class="checklist">
+            <h3>QA</h3>
+            <ul id="qualityList"></ul>
+          </div>
+        </section>
+      </section>
+
+      <section class="library-grid">
+        <section class="library-panel">
+          <div class="section-heading">
+            <h2>Стартовые идеи</h2>
+            <button class="ghost-button" id="shuffleStarterButton" type="button">Перемешать</button>
+          </div>
+          <div class="preset-list" id="starterList"></div>
+
+          <div class="option-editor">
+            <div class="section-heading editor-heading">
+              <h3>Дополнить список</h3>
+              <span class="editor-note">Русское название + English для промпта</span>
+            </div>
+            <div class="option-editor-grid">
+              <label>
+                <span>Список</span>
+                <select id="optionTarget"></select>
+              </label>
+              <label>
+                <span>Русская подпись</span>
+                <input id="optionLabel" type="text" placeholder="например: Костяные наросты">
+              </label>
+              <label class="wide-field">
+                <span>English для промпта</span>
+                <input id="optionValue" type="text" placeholder="например: jagged bone growths">
+              </label>
+              <button class="ghost-button add-option-button" id="addOptionButton" type="button">Добавить</button>
+            </div>
+            <div class="custom-option-list" id="customOptionList"></div>
+          </div>
+        </section>
+
+        <section class="batch-panel">
+          <div class="section-heading">
+            <h2>Пакет</h2>
+            <div class="batch-controls">
+              <input id="batchCount" type="number" min="1" max="50" value="10">
+              <button class="ghost-button" id="generateBatchButton" type="button">Собрать</button>
+              <button class="ghost-button" id="copyBatchButton" type="button">Копировать</button>
+            </div>
+          </div>
+          <textarea id="batchOutput" class="batch-output" spellcheck="false"></textarea>
+        </section>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>
